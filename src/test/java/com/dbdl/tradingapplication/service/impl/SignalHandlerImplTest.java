@@ -94,4 +94,15 @@ public class SignalHandlerImplTest {
                 "submitToMarket\n" +
                 "doAlgo", outputStreamCaptor.toString().trim());
     }
+
+    @Test
+    public void verifyHandleSignal_6() {
+        int signal = 6;
+        cut.handleSignal(signal);
+        assertEquals("setAlgoParam 5,111\n" +
+                "performCalc\n" +
+                "submitToMarket\n" +
+                "doAlgo", outputStreamCaptor.toString().trim());
+    }
+
 }
