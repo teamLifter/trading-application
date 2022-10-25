@@ -1,39 +1,42 @@
 package com.dbdl.tradingapplication.service.impl;
 
-import com.dbdl.tradingapplication.lib.algo.Algo;
+import com.dbdl.tradingapplication.model.SignalSpecifications;
 import com.dbdl.tradingapplication.service.SignalHandler;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @Service
 public class SignalHandlerImpl implements SignalHandler {
 
-    @Override
-    public void handleSignal(int signal) {
-        Algo algo = new Algo();
+    private static final SignalSpecifications signalSpecs = new SignalSpecifications();
 
-        switch (signal) {
-            case 1:
-                algo.setUp();
-                algo.setAlgoParam(1, 60);
-                algo.performCalc();
-                algo.submitToMarket();
-                break;
-            case 2:
-                algo.reverse();
-                algo.setAlgoParam(1, 80);
-                algo.submitToMarket();
-                break;
-            case 3:
-                algo.setAlgoParam(1, 90);
-                algo.setAlgoParam(2, 15);
-                algo.performCalc();
-                algo.submitToMarket();
-                break;
-            default:
-                algo.cancelTrades();
-                break;
+    @Override
+    public void handleSignal(int signal) throws RuntimeException {
+        Method signalSpec = getMethodBySignal(signal);
+        executeSignalSpec(signalSpec);
+    }
+
+    private void executeSignalSpec(Method signalSpec) throws RuntimeException {
+        if (signalSpec == null) {
+            signalSpecs.signalSpec_default();
+            signalSpecs.execute();
         }
 
-        algo.doAlgo();
+        try {
+            signalSpec.invoke(signalSpecs);
+            signalSpecs.execute();
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Method getMethodBySignal(int signal) {
+        try {
+            return signalSpecs.getClass().getDeclaredMethod(SignalSpecifications.SPEC_PREFIX + signal);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
     }
 }
