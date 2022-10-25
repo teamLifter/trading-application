@@ -77,4 +77,18 @@ public class SignalControllerTest {
         assertEquals(SignalController.SUCCESS_MESSAGE_PREFIX + signal, response.getBody());
     }
 
+    @Test
+    public void verifyExecuteSignal_4() {
+        int signal = 4;
+        ResponseEntity<String> response = cut.executeSignal(signal);
+        assertEquals(SignalController.SUCCESS_MESSAGE_PREFIX + signal, response.getBody());
+    }
+
+    @Test
+    public void verifyExecuteSignal_5() {
+        int signal = 4;
+        ResponseEntity<String> response = cut.executeSignal(signal);
+        assertEquals(SignalController.SUCCESS_MESSAGE_PREFIX + signal, response.getBody());
+    }
+
 }

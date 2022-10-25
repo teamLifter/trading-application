@@ -73,4 +73,25 @@ public class SignalHandlerImplTest {
                 "submitToMarket\n" +
                 "doAlgo", outputStreamCaptor.toString().trim());
     }
+
+    @Test
+    public void verifyHandleSignal_4() {
+        int signal = 4;
+        cut.handleSignal(signal);
+        assertEquals("setUp\n" +
+                "setAlgoParam 3,90\n" +
+                "performCalc\n" +
+                "submitToMarket\n" +
+                "doAlgo", outputStreamCaptor.toString().trim());
+    }
+
+    @Test
+    public void verifyHandleSignal_5() {
+        int signal = 5;
+        cut.handleSignal(signal);
+        assertEquals("reverse\n" +
+                "setAlgoParam 4,120\n" +
+                "submitToMarket\n" +
+                "doAlgo", outputStreamCaptor.toString().trim());
+    }
 }

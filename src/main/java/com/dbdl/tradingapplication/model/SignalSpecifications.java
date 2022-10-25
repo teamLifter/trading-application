@@ -39,4 +39,23 @@ public class SignalSpecifications {
         algo.submitToMarket();
     }
 
+    public void signalSpec_4() {
+        algo.setUp();
+        algo.setAlgoParam(3, 90);
+        algo.performCalc();
+        algo.submitToMarket();
+    }
+
+    public void signalSpec_5() {
+        algo.reverse();
+        algo.setAlgoParam(4, 120);
+        algo.submitToMarket();
+    }
+
+    public void signalSpec_6() {
+        algo.setAlgoParam(5, 111);
+        algo.performCalc();
+        algo.submitToMarket();
+    }
+
 }

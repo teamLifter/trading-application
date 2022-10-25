@@ -22,6 +22,7 @@ public class SignalHandlerImpl implements SignalHandler {
         if (signalSpec == null) {
             signalSpecs.signalSpec_default();
             signalSpecs.execute();
+            return;
         }
 
         try {
